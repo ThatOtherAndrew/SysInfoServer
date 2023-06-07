@@ -1,2 +1,2 @@
 @echo off
-powershell -ExecutionPolicy Bypass -File .\upload.ps1
+powershell -ExecutionPolicy Bypass -File ".\SysInfo Upload.ps1"
