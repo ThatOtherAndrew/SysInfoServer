@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SysInfo Viewer</title>
+    {% if not debug %}
+    <meta http-equiv="refresh" content="5">
+    {% endif %}
+
+    <script>
+        function copy(index) {
+            const buffer = document.createElement('textarea');
+            buffer.value = document.getElementById(`sysinfo_${index}`).innerText;
+            document.body.appendChild(buffer);
+            buffer.focus({ preventScroll: true });
+            buffer.select();
+            document.execCommand('copy');
+            document.body.removeChild(buffer);
+        }
+
+        function reset() {
+            fetch('/', { method: 'DELETE' }).then(() => location.reload());
+        }
+    </script>
+
+    <style>
+    li > * {
+        display: inline;
+    }
+
+    li > button {
+        margin-right: 4em;
+    }
+    </style>
+</head>
+
+<body>
+    <ul>
+        {% for sysinfo in sysinfos %}
+        <li>
+            <button onclick="copy({{loop.index}})">Copy</button>
+            <pre id="sysinfo_{{loop.index}}">{{sysinfo}}</pre>
+        </li>
+        {% endfor %}
+    </ul>
+    <hr>
+    <button onclick="reset()">Clear</button>
+</body>
+</html>
